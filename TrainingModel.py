@@ -25,5 +25,4 @@ print("The training data is: ", train_file)
 df = pd.read_json(os.path.join(train_file, 'metadata.json'))
 meta_train_df = df.T
 
-meta_train_df.head()
-
+print(meta_train_df)
