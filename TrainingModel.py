@@ -3,7 +3,6 @@
 :date: February 14, 2020
 :description: This is the code for training the neural network
 """
-
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, Conv2D, MaxPooling2D, GlobalAveragePooling2D
 import pandas as pd
@@ -31,7 +30,7 @@ x_test = x_test.reshape(x_test.shape[0], num_rows, num_columns, num_channels)
 num_labels =yy.shape[1]
 filter_size =2
 
-
+#model
 model = Sequential()
 model.add(Conv2D(filters=16, kernel_size=2, input_shape=(num_rows, num_columns, num_channels),
                  activation='relu'))
@@ -54,6 +53,8 @@ model.add(GlobalAveragePooling2D())
 
 model.add(Dense(num_labels, activation='softmax'))
 
+
+#compile
 model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer='adam')
 
 model.summary()
@@ -64,10 +65,7 @@ accuracy = 100*score[1]
 
 print("Pre-training accuracy: %.4f%%" % accuracy)
 
-
-
-
-
+#training
 num_epochs = 10 #may be changed
 num_batch_size = 256 #may be changed
 
@@ -81,8 +79,7 @@ duration=datetime.now()-start
 
 print("Traininng done in: ", duration)
 
-
-
+#accuracy
 score = model.evaluate(x_train, y_train, verbose=0)
 print("Training accuracyL ", score[1])
 score=model.evaluate(x_test, y_test, verbose=0)
