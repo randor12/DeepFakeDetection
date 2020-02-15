@@ -5,18 +5,17 @@
     based on the trained model
 """
 
-import keras
-import keras.models
-import os
-import numpy as np
-import librosa
+from sklearn.linear_model import LinearRegression
+import pickle
+from ExtractionScript import *
+
 
 class PredictionModel:
     def __init__(self):
         """
         Initialize the prediction model
         """
-        self.model_path = 'saved_model_240_8_32_0.05_1_50_0_0.0001_100_156_2_True_True_fitted_objects.h5'
+        self.model_path = 'models/MyModel.pkl'
 
     def predict(self, frame):
         """
@@ -24,15 +23,15 @@ class PredictionModel:
         :param frame: image/video sent in to be analyzed
         :return: Return if the frame has been edited visually or through audio
         """
+        try:
+            with open(self.model_path, 'rb') as file:
+                model = pickle.load(file)
 
-        model = keras.models.load_model(self.model_path)
+            process = extract_features(frame)
 
-        process = librosa.load(frame)
+            predicted = model.predict(process)
 
-        predicted = model.predict(process)
-
-        labels = ['fake', 'real']
-
-        i = predicted.argmax(axis=0)[0]
-
-        return labels[i]
+            return predicted
+        except Exception:
+            print("Model not found")
+            return None
