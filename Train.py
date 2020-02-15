@@ -5,8 +5,10 @@
 """
 
 from pandas import DataFrame
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import *
+import keras
+from keras.models import Sequential
+from sklearn import preprocessing
+from keras.layers import *
 from ExtractionScript import *
 import pickle
 
@@ -21,10 +23,41 @@ class Train():
         train_file = os.path.join(direct, 'realtalk')
         self.data = self.data.append(self.dataFrameFromDirectory(os.path.join(train_file, 'fake'), 'FAKE'))
         self.data = self.data.append(self.dataFrameFromDirectory(os.path.join(train_file, 'real'), 'REAL'))
-        vect = CountVectorizer()
-        counts = vect.fit_transform(self.data['audio'].values)
-        targets = self.data['label'].values
-        classifier = MultinomialNB()
+        counts = self.data['audio'].values
+        targets = preprocessing.LabelEncoder().fit_transform(self.data['label'].values)
+
+        print(targets.shape)
+
+        counts = counts.reshape((24, 1, 1))
+
+        print(counts.shape)
+
+        # Construct model
+        classifier = Sequential()
+        classifier.add(
+            Conv1D(filters=16, kernel_size=2, input_shape=(1, 1), activation='relu', padding='same'))
+        classifier.add(MaxPooling1D(pool_size=2, padding='same'))
+        classifier.add(Dropout(0.2))
+
+        classifier.add(Conv1D(filters=32, kernel_size=2, activation='relu', padding='same'))
+        classifier.add(MaxPooling1D(pool_size=2, padding='same'))
+        classifier.add(Dropout(0.2))
+
+        classifier.add(Conv1D(filters=64, kernel_size=2, activation='relu', padding='same'))
+        classifier.add(MaxPooling1D(pool_size=2, padding='same'))
+        classifier.add(Dropout(0.2))
+
+        classifier.add(Conv1D(filters=128, kernel_size=2, activation='relu', padding='same'))
+        classifier.add(MaxPooling1D(pool_size=2, padding='same'))
+        classifier.add(Dropout(0.2))
+        classifier.add(GlobalAveragePooling1D())
+
+        classifier.add(Dense(1, activation='softmax'))
+
+        classifier.compile(optimizer='adam',
+                           loss='binary_crossentropy',
+                           metrics=['accuracy'])
+        classifier.build(input_shape=(24, 1))
         classifier.fit(counts, targets)
         model_file = 'models/MyModel.pkl'
         with open(model_file, 'wb') as file:
@@ -43,7 +76,7 @@ class Train():
         index = []
 
         for filename, value in self.readFiles(path):
-            rows.append({'audio': value.shape, 'label': classification})
+            rows.append({'audio': np.mean(value), 'label': classification})
             index.append(filename)
         return DataFrame(rows, index=index)
 
