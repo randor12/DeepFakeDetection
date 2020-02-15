@@ -16,8 +16,8 @@ if __name__ == '__main__':
     def send():
         i = 0 # temporary
 
-    def play_sound(char):
-        playsound(char)
+    def play_sound(string):
+        playsound(string)
 
 
     # Creates window
@@ -27,10 +27,10 @@ if __name__ == '__main__':
 
     # Creates items in window
     tk.Label(window, text="Select File:").grid(row=0, columnspan=3)
-    tk.Entry(window).grid(row=1)
+    entry = tk.Entry(window).grid(row=1)
     tk.Button(window, text="Browse", command=open_file).grid(row=1, column=2)
     tk.Button(window, text="Submit", command=send).grid(row=2, column=0, columnspan=3)
-    tk.Button(window, text="Play", )
+    tk.Button(window, text="Play", command=play_sound(entry)).grid(row = 3, column = 2)
 
     tk.Button(window, text='Quit', command=window.quit).grid(row=3, column=3)
 
