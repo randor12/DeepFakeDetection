@@ -15,6 +15,11 @@ from sklearn import svm, metrics
 from IPython.display import Video
 import librosa
 import librosa.display
+from keras.utils import to_categorical
+from sklearn.preprocessing import LabelEncoder
+import ExtractionScript as es
+
+
 
 
 # Initialize the training model
