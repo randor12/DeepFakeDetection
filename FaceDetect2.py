@@ -4,19 +4,20 @@
 :description: Face detection
 Found initialization on Kaggle
 """
+from argparse import ArgumentParser
 
 import cv2 as cv
 import argparse
 
 
-class FaceDetection2:
-    def __init__(self, object_cascade_path):
-        """
-        Initalize face detection
-        :param object_cascade_path:
-        """
-        self.objectCascade = cv.CascadeClassifier(object_cascade_path)
-def detectDisplay
+#class FaceDetection2:
+    #def __init__(self, object_cascade_path):
+     #   """
+      #  Initalize face detection
+       # :param object_cascade_path:
+        #"""
+        #self.objectCascade = cv.CascadeClassifier(object_cascade_path)
+def detectDisplay(frame):
     frame_grey = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     frame_grey = cv.equalizeHist(frame_grey)
     faces = face_cascade.detectMultiScslr(frame_grey)
@@ -34,9 +35,9 @@ def detectDisplay
 
     cv.imshow('Capture', frame)
 
-parser =argparse.ArgumentParser(description='Cascade code')
-parser.add_argument('--face_cascade', help='Path tp face cascade', default='data/haarcascade_frontalface_alt.xml')
-parser.add_argument('--eye', help='Path to eye cascade', default='data/haarcascade_eye_tree_eyeglasses.xml')
+parser = argparse.ArgumentParser(description='Cascade code')
+parser.add_argument('--face_cascade', help='Path tp face cascade', default='opencv/data/haarcascades/haarcascade_frontalface_alt.xml')
+parser.add_argument('--eye_cascade', help='Path to eye cascade', default='opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml')
 parser.add_argument('--camera', help='Camera divide number', type=int, defualt=0)
 args = parser.parse_args()
 
@@ -57,3 +58,12 @@ cap = cv.VideoCapture(cam)
 if not cap.isOpened():
     print('--(!)Error opening cam')
     exit(0)
+
+while True:
+    ret, frame = cap.read()
+    if frame is None:
+        print('--(!) Error no frame capetured')
+        break
+    detectAndDisplay(frame)
+    if cv.waitKey(10)==27:
+        break
