@@ -7,6 +7,8 @@
 
 import keras
 import keras.models
+import os
+import numpy as np
 import librosa
 
 class PredictionModel:
@@ -14,7 +16,7 @@ class PredictionModel:
         """
         Initialize the prediction model
         """
-        self.model_path = 'saved_model_240_8_32_0.05_1_0.0001_100_156_2_True_True_fitted_objects.h5'
+        self.model_path = 'saved_model_240_8_32_0.05_1_50_0_0.0001_100_156_2_True_True_fitted_objects.h5'
 
     def predict(self, frame):
         """
@@ -22,10 +24,12 @@ class PredictionModel:
         :param frame: image/video sent in to be analyzed
         :return: Return if the frame has been edited visually or through audio
         """
-        data, sr = librosa.load(self.model_path, res_type='kaiser_fast')
+
         model = keras.models.load_model(self.model_path)
 
-        predicted = model.predict(frame)
+        process = librosa.load(frame)
+
+        predicted = model.predict(process)
 
         labels = ['fake', 'real']
 
