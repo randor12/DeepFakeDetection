@@ -7,7 +7,7 @@
 
 import keras
 import keras.models
-
+import librosa
 
 class PredictionModel:
     def __init__(self):
@@ -22,7 +22,7 @@ class PredictionModel:
         :param frame: image/video sent in to be analyzed
         :return: Return if the frame has been edited visually or through audio
         """
-
+        data, sr = librosa.load(self.model_path, res_type='kaiser_fast')
         model = keras.models.load_model(self.model_path)
 
         predicted = model.predict(frame)
