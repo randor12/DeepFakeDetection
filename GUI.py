@@ -4,8 +4,7 @@
 :description: This is our GUI code
 """
 import tkinter as tk
-from tkinter import *
-from tkinter.ttk import *
+from tkinter import filedialog
 
 if __name__ == '__main__':
     def open_file():
@@ -16,18 +15,18 @@ if __name__ == '__main__':
         i = 0
 
 
+    def UploadAction(event=None):
+        filename = filedialog.askopenfilename()
+        print('Selected:', filename)
+
     # Creates window
     window = tk.Tk()
     window.title("DeepVoice")
-    window.geometry("1000x1000")
+    w, h = window.winfo_screenwidth(), window.winfo_screenheight()
+    window.geometry("%dx%d+0+0" % (w, h))
+    uploadButton = tk.Button(window, text='Input', command=UploadAction)
+    uploadButton.pack()
 
     # Creates items in window
-    tk.Label(window, text="Select File:").grid(row=0, columnspan=3)
-    tk.Entry(window).grid(row=1)
-    tk.Button(window, text="Browse", command=open_file).grid(row=1, column=2)
-    tk.Button(window, text="Submit", command=send).grid(row=2, column=0, columnspan=3)
 
-    tk.Button(window, text='Quit', command=window.quit).grid(row=3, column=3)
-
-    progress = Progressbar()
     window.mainloop()
