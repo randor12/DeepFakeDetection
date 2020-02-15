@@ -22,7 +22,7 @@ def extract_features(fileName):
         mfccsscaled = np.mean(mfccs.T, axis=0)
 
     except Exception as error:
-        print("Error encountered while parsing file: ", file)
+        print("Error encountered while parsing file: ", fileName)
         return None
 
     return mfccsscaled
@@ -33,7 +33,7 @@ def create_DataFrame(DataSetPath):
     # Set the path for the folder containing the dataset
     fulldatasetpath = DataSetPath
 
-    metadata = pd.read_json(fulldatasetpath + '../metadata/(WhateverCSVFIleHere')
+    metadata = pd.read_json(fulldatasetpath + 'metadata.json')
 
     features = []
 
