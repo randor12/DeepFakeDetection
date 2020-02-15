@@ -2,7 +2,8 @@
 
 :author: Marcus Tran
 :date: February 15th, 2020
-:description:
+:description: Functions to comb through a data set and then extract the features from audio files
+in a given data path
 Based on Medium Article and Example Code
 """
 
@@ -26,6 +27,7 @@ def extract_features(fileName):
 
     return mfccsscaled
 
+
 def create_DataFrame(DataSetPath):
 
     # Set the path for the folder containing the dataset
@@ -45,6 +47,7 @@ def create_DataFrame(DataSetPath):
 
         features.append([data, class_label])
 
+    # Converts the data into a data frame for use
     FeatureDataFrame = pd.DataFrame(features, columns=['feature', 'class_label'])
 
     return FeatureDataFrame
