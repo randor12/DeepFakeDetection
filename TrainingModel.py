@@ -8,6 +8,11 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, Conv2D, MaxPooling2D, GlobalAveragePooling2D
+import WavFileHelper
+from sklearn.preprocessing import LabelEncoder
+from keras.utils import to_categorical
+from sklearn.model_selection import train_test_split
+import ExtractionScript
 from keras.optimizers import Adam
 from keras.utils import np_utils
 from sklearn import metrics
@@ -18,8 +23,25 @@ from keras.callbacks import ModelCheckpoint
 from datatime import datetime
 
 
+fulldatasetpath='''datapath'''
+metadata=pd.read_csv(fulldatasetpath+''''metatdata''')
+features=[]
+for index, row in metadata.iterrows():
+    file_name=os.path.join(os.path.abspath(fulldatasetpath),
+                           'fold'+str(row['fold']+'/',str(row["slice_file_name"])))
+    class_label = row["class_name"]
+    data=extract_features(file_name)
+    features.append([data, class_label])
 
+featuresdf = pd.DataFrame(features, columns='[feature', 'class_label'])
+print('Finished extracting from ', len(featuresdf), ' files')
+X=np.array(featuresdf.feature.tolist())
+y=np.array(featuresdf.class_label.tolist())
 
+le = LabelEncoder()
+yy=to_categorical(le.fit_transform(y))
+
+x_train, x_test, y_train, y_test = train_test_split(X,yy,test_size=0.2, random_state=42)
 
 
 num_rows = 40
@@ -72,7 +94,7 @@ print("Pre-training accuracy: %.4f%%" % accuracy)
 num_epochs = 10 #may be changed
 num_batch_size = 256 #may be changed
 
-checkerpointer = ModelCheckpoint(filepath=''''filepath need to be statedd''', verbose=1, save_best_only=True)
+checkerpointer = ModelCheckpoint(filepath=''''filepath need to be stated''', verbose=1, save_best_only=True)
 
 start = datetime.now()
 
@@ -81,5 +103,12 @@ model.fit(x_train, y_train, batch_size=num_batch_size, epochs=num_epochs,
 duration=datetime.now()-start
 
 print("Traininng done in: ", duration)
+
+
+
+score = model.evaluate(x_train, y_train, verbose=0)
+print("Training accuracyL ", score[1])
+score=model.evaluate(x_test, y_test, verbose=0)
+print("training accuracy: ", score[1])
 
 
