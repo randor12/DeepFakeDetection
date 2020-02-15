@@ -6,6 +6,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
+from playsound import *
 
 if __name__ == '__main__':
     def open_file():
@@ -14,6 +15,9 @@ if __name__ == '__main__':
 
     def send():
         i = 0 # temporary
+
+    def play_sound(char):
+        playsound(char)
 
 
     # Creates window
@@ -26,6 +30,7 @@ if __name__ == '__main__':
     tk.Entry(window).grid(row=1)
     tk.Button(window, text="Browse", command=open_file).grid(row=1, column=2)
     tk.Button(window, text="Submit", command=send).grid(row=2, column=0, columnspan=3)
+    tk.Button(window, text="Play", )
 
     tk.Button(window, text='Quit', command=window.quit).grid(row=3, column=3)
 
