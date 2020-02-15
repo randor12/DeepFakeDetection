@@ -1,5 +1,5 @@
 """
-:author: Ryan Nicholas
+:author: Ryan Nicholas, Matt Gonley
 :date: February 14, 2020
 :description: This is the code for training the neural network
 """
@@ -20,6 +20,18 @@ from sklearn.preprocessing import LabelEncoder
 import ExtractionScript as es
 
 
+from keras.callbacks import ModelCheckpoint
+from datatime import datetime
+
+num_epochs = 10 #may be changed
+num_batch_size = 256 #may be changed
+
+checkerpointer = ModelCheckpoint(filepath=''''filepath''', verbose=1, save_best_only=True)
+
+start = datetime.now()
+
+model.fit(x_train, y_train, batch_size=num_batch_size, epochs=num_epochs,
+          validation_data=(x_test, y_test), callbacks=[checkerpointer], verbose=1)
 
 
 # Initialize the training model
