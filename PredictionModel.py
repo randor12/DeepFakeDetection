@@ -5,6 +5,7 @@
     based on the trained model
 """
 
+from sklearn.linear_model import LinearRegression
 import pickle
 from ExtractionScript import *
 
