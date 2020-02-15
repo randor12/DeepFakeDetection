@@ -5,10 +5,6 @@
     based on the trained model
 """
 
-import keras
-import keras.models
-import os
-import numpy as np
 import pickle
 from ExtractionScript import *
 
