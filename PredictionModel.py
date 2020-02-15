@@ -18,7 +18,7 @@ class PredictionModel:
         """
         Initialize the prediction model
         """
-        self.model_path = 'models/MyModel.h5'
+        self.model_path = 'models/MyModel.pkl'
 
     def predict(self, frame):
         """
@@ -27,7 +27,7 @@ class PredictionModel:
         :return: Return if the frame has been edited visually or through audio
         """
         try:
-            with open('models/MyModel.pkl', 'rb') as file:
+            with open(self.model_path, 'rb') as file:
                 model = pickle.load(file)
 
             process = extract_features(frame)
