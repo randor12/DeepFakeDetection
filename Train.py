@@ -5,7 +5,8 @@
 """
 
 from pandas import DataFrame
-from sklearn.linear_model import LinearRegression
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import *
 from ExtractionScript import *
 import pickle
 
@@ -18,11 +19,12 @@ class Train():
         self.data = DataFrame({'audio': [], 'label': []})
         direct = os.getcwd()
         train_file = os.path.join(direct, 'realtalk')
-        self.data.append(self.dataFrameFromDirectory(os.path.join(train_file, 'fake'), 'FAKE'))
-        self.data.append(self.dataFrameFromDirectory(os.path.join(train_file, 'real'), 'REAL'))
-        counts = self.data['audio'].values
+        self.data = self.data.append(self.dataFrameFromDirectory(os.path.join(train_file, 'fake'), 'FAKE'))
+        self.data = self.data.append(self.dataFrameFromDirectory(os.path.join(train_file, 'real'), 'REAL'))
+        vect = CountVectorizer()
+        counts = vect.fit_transform(self.data['audio'].values)
         targets = self.data['label'].values
-        classifier = LinearRegression()
+        classifier = MultinomialNB()
         classifier.fit(counts, targets)
         model_file = 'models/MyModel.pkl'
         with open(model_file, 'wb') as file:
@@ -37,14 +39,13 @@ class Train():
         :param classification: classification
         :return: appended Dataframe
         """
-        row = []
+        rows = []
         index = []
 
         for filename, value in self.readFiles(path):
-            row.append({"audio": value, "label": classification})
+            rows.append({'audio': value.shape, 'label': classification})
             index.append(filename)
-
-        return DataFrame(row, index=index)
+        return DataFrame(rows, index=index)
 
     def readFiles(self, path):
         """
@@ -53,6 +54,7 @@ class Train():
         :return: values
         """
         for root, dirnames, files in os.walk(path):
-            file = os.path.join(path, files)
-            val = extract_features(file)
-            yield file, val
+            for filename in files:
+                file = os.path.join(root, filename)
+                val = extract_features(file)
+                yield file, val
