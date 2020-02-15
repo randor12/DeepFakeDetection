@@ -22,6 +22,7 @@ class PredictionModel:
         :param frame: image/video sent in to be analyzed
         :return: Return if the frame has been edited visually or through audio
         """
+
         model = keras.models.load_model(self.model_path)
 
         predicted = model.predict(frame)
@@ -30,4 +31,4 @@ class PredictionModel:
 
         i = predicted.argmax(axis=0)[0]
 
-        return labels[i]  # predict true always until the model is up and running
+        return labels[i]
