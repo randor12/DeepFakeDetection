@@ -9,11 +9,11 @@ from tkinter.ttk import *
 
 if __name__ == '__main__':
     def open_file():
-        i = 0
+        i = 0 # temporary
 
 
     def send():
-        i = 0
+        i = 0 # temporary
 
 
     # Creates window
