@@ -33,10 +33,9 @@ def create_DataFrame(DataSetPath):
     # Set the path for the folder containing the dataset
     fulldatasetpath = DataSetPath
 
-    metadata = pd.read_json(fulldatasetpath + 'metadata.json')
+    metadata = pd.read_json(fulldatasetpath + 'metadata.json', orient='split')
 
     features = []
-
     # Extract features from each sound file
     for index, row in metadata.iterrows():
 

@@ -3,15 +3,18 @@
 :date: February 14, 2020
 :description: This is the code for training the neural network
 """
+import datetime
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, Conv2D, MaxPooling2D, GlobalAveragePooling2D
 import pandas as pd
+import numpy as np
+from keras.models import Sequential
+from keras.callbacks import ModelCheckpoint
 import os
 from ExtractionScript import create_DataFrame
 
-
 #Extracion script does this.
-featuresdf = create_DataFrame('./realtalk')
+featuresdf = create_DataFrame('/realtalk/')
 print('Finished extracting from ', len(featuresdf), ' files')
 
 
@@ -27,7 +30,7 @@ num_channels = 1
 x_train = x_train.reshape(x_train.shape[0], num_rows, num_columns, num_channels)
 x_test = x_test.reshape(x_test.shape[0], num_rows, num_columns, num_channels)
 
-num_labels =yy.shape[1]
+num_labels =ConvertData.yy.shape[1]
 filter_size =2
 
 #model
@@ -69,7 +72,9 @@ print("Pre-training accuracy: %.4f%%" % accuracy)
 num_epochs = 10 #may be changed
 num_batch_size = 256 #may be changed
 
-checkerpointer = ModelCheckpoint(filepath=''''filepath need to be stated''', verbose=1, save_best_only=True)
+
+#do not know if this is right
+checkerpointer = ModelCheckpoint(filepath='saved_Models/training.f5', verbose=1, save_best_only=True)
 
 start = datetime.now()
 
