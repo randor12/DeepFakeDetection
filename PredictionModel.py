@@ -5,13 +5,16 @@
     based on the trained model
 """
 
+import keras
+import keras.models
+
 
 class PredictionModel:
     def __init__(self):
         """
         Initialize the prediction model
         """
-        self.model_path = 'Model.h5'
+        self.model_path = 'saved_model_240_8_32_0.05_1_0.0001_100_156_2_True_True_fitted_objects.h5'
 
     def predict(self, frame):
         """
@@ -19,5 +22,12 @@ class PredictionModel:
         :param frame: image/video sent in to be analyzed
         :return: Return if the frame has been edited visually or through audio
         """
-        prediction = True
-        return prediction  # predict true always until the model is up and running
+        model = keras.models.load_model(self.model_path)
+
+        predicted = model.predict(frame)
+
+        labels = ['fake', 'real']
+
+        i = predicted.argmax(axis=0)[0]
+
+        return labels[i]  # predict true always until the model is up and running
