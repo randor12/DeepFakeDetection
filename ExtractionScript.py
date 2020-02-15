@@ -2,7 +2,8 @@
 
 :author: Marcus Tran
 :date: February 15th, 2020
-:description:
+:description: Functions to comb through a data set and then extract the features from audio files
+in a given data path
 Based on Medium Article and Example Code
 """
 
@@ -21,17 +22,18 @@ def extract_features(fileName):
         mfccsscaled = np.mean(mfccs.T, axis=0)
 
     except Exception as error:
-        print("Error encountered while parsing file: ", file)
+        print("Error encountered while parsing file: ", fileName)
         return None
 
     return mfccsscaled
+
 
 def create_DataFrame(DataSetPath):
 
     # Set the path for the folder containing the dataset
     fulldatasetpath = DataSetPath
 
-    metadata = pd.read_json(fulldatasetpath + '../metadata/(WhateverCSVFIleHere')
+    metadata = pd.read_json(fulldatasetpath + 'metadata.json')
 
     features = []
 
@@ -45,6 +47,7 @@ def create_DataFrame(DataSetPath):
 
         features.append([data, class_label])
 
+    # Converts the data into a data frame for use
     FeatureDataFrame = pd.DataFrame(features, columns=['feature', 'class_label'])
 
     return FeatureDataFrame
