@@ -33,8 +33,37 @@ num_labels =yy.shape[1]
 filter_size =2
 
 
+model = Sequential()
+model.add(Conv2D(filters=16, kernel_size=2, input_shape=(num_rows, num_columns, num_channels),
+                 activation='relu'))
 
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(.02))
 
+model.add(Conv2D(filters=32, kernel_size=2, activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.2))
+
+model.add(Conv2D(filters=64, kernel_size=2, activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.2))
+
+model.add(Conv2D(filters=128, kernel_size=2, activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.2))
+model.add(GlobalAveragePooling2D())
+
+model.add(Dense(num_labels, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer='adam')
+
+model.summary()
+
+score = model.evaluate(x_test, y_test, verbose=1)
+
+accuracy = 100*score[1]
+
+print("Pre-training accuracy: %.4f%%" % accuracy)
 
 
 
@@ -52,4 +81,5 @@ model.fit(x_train, y_train, batch_size=num_batch_size, epochs=num_epochs,
 duration=datetime.now()-start
 
 print("Traininng done in: ", duration)
+
 
