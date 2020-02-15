@@ -26,17 +26,25 @@ def extract_features(fileName):
 
     return mfccsscaled
 
-# Set the path for the folder containing the dataset
-fulldatasetpath = "Place here for data path"
+def create_DataFrame(DataSetPath):
 
+    # Set the path for the folder containing the dataset
+    fulldatasetpath = DataSetPath
 
-metadata = pd.read_csv(fulldatasetpath + '../metadata/(WhateverCSVFIleHere')
+    metadata = pd.read_json(fulldatasetpath + '../metadata/(WhateverCSVFIleHere')
 
-features = []
+    features = []
 
-# Extract features from each sound file
-for index, row in metadata.iterrows():
+    # Extract features from each sound file
+    for index, row in metadata.iterrows():
 
-    fileName = os.path.join(os.path.abspath(fulldatasetpath),'fold'+str(row["fold"])+'/',str(row["slice_file_name"]))
+        fileName = os.path.join(os.path.abspath(fulldatasetpath),'fold'+str(row["fold"])+'/',str(row["slice_file_name"]))
 
-    class_label = row["class_name"]
+        class_label = row["class_name"]
+        data = extract_features(fileName)
+
+        features.append([data, class_label])
+
+    FeatureDataFrame = pd.DataFrame(features, columns=['feature', 'class_label'])
+
+    return FeatureDataFrame
