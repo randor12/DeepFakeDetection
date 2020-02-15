@@ -6,35 +6,19 @@
 
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, Conv2D, MaxPooling2D, GlobalAveragePooling2D
-from ExtractionScript import extract_features
 import pandas as pd
 import os
+from ExtractionScript import create_DataFrame
 
 
 #Extracion script does this.
-fulldatasetpath='./realtalk/'
-metadata=pd.read_csv(fulldatasetpath+'metadata.json') # not quite sure what exactly is meant to be here
-features=[]
-for index, row in metadata.iterrows():
-    file_name=os.path.join(os.path.abspath(fulldatasetpath),
-                           'fold'+str(row['fold']+'/',str(row["slice_file_name"])))
-    class_label = row["class_name"]
-    data=extract_features(file_name)
-    features.append([data, class_label])
-
-featuresdf = pd.DataFrame(features, columns='[feature', 'class_label'])
+featuresdf = create_DataFrame('./realtalk')
 print('Finished extracting from ', len(featuresdf), ' files')
 
 
 #Converting data does this
-X=np.array(featuresdf.feature.tolist())
-y=np.array(featuresdf.class_label.tolist())
-
-le = LabelEncoder()
-yy=to_categorical(le.fit_transform(y))
-
-x_train, x_test, y_train, y_test =
-#train_test_split(X, yy, test_size=0.2, random_state=42)
+from ConvertingData import ConvertData
+x_train, x_test, y_train, y_test = ConvertData.splitData(featuresdf)
 
 
 num_rows = 40
