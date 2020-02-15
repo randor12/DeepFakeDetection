@@ -9,7 +9,7 @@ import keras
 import keras.models
 import os
 import numpy as np
-import librosa
+from ExtractionScript import *
 
 
 class PredictionModel:
@@ -28,7 +28,7 @@ class PredictionModel:
 
         model = keras.models.load_model(self.model_path)
 
-        process = librosa.load(frame)
+        process = extract_features(frame)
 
         predicted = model.predict(process)
 
