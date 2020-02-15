@@ -16,7 +16,7 @@ class PredictionModel:
         """
         Initialize the prediction model
         """
-        self.model_path = 'saved_model_240_8_32_0.05_1_50_0_0.0001_100_156_2_True_True_fitted_objects.h5'
+        self.model_path = 'models/MyModel.h5'
 
     def predict(self, frame):
         """
