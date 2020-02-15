@@ -34,11 +34,7 @@ class PredictionModel:
 
             predicted = model.predict(process)
 
-            labels = ['fake', 'real']
-
-            i = predicted.argmax(axis=0)[0]
-
-            return labels[i]
+            return predicted
         except Exception:
             print("Model not found")
             return None
