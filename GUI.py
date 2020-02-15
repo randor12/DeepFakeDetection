@@ -4,7 +4,12 @@
 :description: This is our GUI code
 """
 
+import tkinter
+
 if __name__ == '__main__':
-    """
-    Main code goes here 
-    """
+
+    window = tkinter.Tk()
+    window.title("Detection A")
+    label = tkinter.Label(window, text = "Select File:").pack()
+    label2 = tkinter.Button(window, text = "Browse").pack()
+    window.mainloop()
