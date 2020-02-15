@@ -3,13 +3,13 @@
 :date: February 14, 2020
 :description: This is our GUI code
 """
-
-import tkinter
+import tkinter as tk
+from tkinter import *
 
 if __name__ == '__main__':
-
-    window = tkinter.Tk()
+    window = tk.Tk()
     window.title("DeepFakeDetection")
-    label = tkinter.Label(window, text = "Select File:").pack()
-    label2 = tkinter.Button(window, text = "Browse").pack()
+    tk.Label(window, text = "Select File:").grid(row = 0, columnspan = 3)
+    tk.Entry(window).grid(row = 1)
+    tk.Button(window, text = "Browse").grid(row = 1, column = 2)
     window.mainloop()
