@@ -10,7 +10,8 @@ import keras.models
 import os
 import numpy as np
 import librosa
-
+import pickle
+from ExtractionScript import *
 
 class PredictionModel:
     def __init__(self):
@@ -25,15 +26,19 @@ class PredictionModel:
         :param frame: image/video sent in to be analyzed
         :return: Return if the frame has been edited visually or through audio
         """
+        try:
+            with open('models/MyModel.pkl', 'rb') as file:
+                model = pickle.load(file)
 
-        model = keras.models.load_model(self.model_path)
+            process = extract_features(frame)
 
-        process = librosa.load(frame)
+            predicted = model.predict(process)
 
-        predicted = model.predict(process)
+            labels = ['fake', 'real']
 
-        labels = ['fake', 'real']
+            i = predicted.argmax(axis=0)[0]
 
-        i = predicted.argmax(axis=0)[0]
-
-        return labels[i]
+            return labels[i]
+        except Exception:
+            print("Model not found")
+            return None
