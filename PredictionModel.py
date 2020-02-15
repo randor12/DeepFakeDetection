@@ -11,6 +11,7 @@ import os
 import numpy as np
 import librosa
 
+
 class PredictionModel:
     def __init__(self):
         """
