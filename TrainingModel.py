@@ -14,8 +14,7 @@ import os
 from ExtractionScript import create_DataFrame
 
 #Extracion script does this.
-featuresdf = create_DataFrame('/realtalk/')
-print('Finished extracting from ', len(featuresdf), ' files')
+featuresdf = create_DataFrame('./realtalk/')
 
 
 #Converting data does this

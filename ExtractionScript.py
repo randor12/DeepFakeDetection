@@ -39,7 +39,8 @@ def create_DataFrame(DataSetPath):
     # Extract features from each sound file
     for index, row in metadata.iterrows():
 
-        fileName = os.path.join(os.path.abspath(fulldatasetpath),'fold'+str(row["fold"])+'/',str(row["slice_file_name"]))
+        fileName = os.path.join(os.path.abspath(fulldatasetpath),'fold'+
+                                str(row["fold"])+'/',str(row["slice_file_name"]))
 
         class_label = row["class_name"]
         data = extract_features(fileName)
@@ -49,4 +50,5 @@ def create_DataFrame(DataSetPath):
     # Converts the data into a data frame for use
     FeatureDataFrame = pd.DataFrame(features, columns=['feature', 'class_label'])
 
+    print('Finished extracting from ', len(FeatureDataFrame), ' files')
     return FeatureDataFrame
