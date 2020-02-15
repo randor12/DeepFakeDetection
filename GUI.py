@@ -9,10 +9,10 @@ from tkinter.ttk import *
 
 if __name__ == '__main__':
     def open_file():
-        # Opens browser for files
+        i = 0
 
     def send():
-        # Sends file to AI
+        i = 0
 
     # Creates window
     window = tk.Tk()
