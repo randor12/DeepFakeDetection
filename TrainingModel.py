@@ -4,27 +4,16 @@
 :description: This is the code for training the neural network
 """
 
-import numpy as np
-from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, Conv2D, MaxPooling2D, GlobalAveragePooling2D
-import WavFileHelper
-from sklearn.preprocessing import LabelEncoder
-from keras.utils import to_categorical
-from sklearn.model_selection import train_test_split
-import ExtractionScript
-from keras.optimizers import Adam
-from keras.utils import np_utils
-from sklearn import metrics
+from ExtractionScript import extract_features
 import pandas as pd
 import os
-import librosa
-from keras.callbacks import ModelCheckpoint
-from datatime import datetime
 
 
-fulldatasetpath='''datapath'''
-metadata=pd.read_csv(fulldatasetpath+''''metatdata''')
+#Extracion script does this.
+fulldatasetpath='./realtalk/'
+metadata=pd.read_csv(fulldatasetpath+'metadata.json') # not quite sure what exactly is meant to be here
 features=[]
 for index, row in metadata.iterrows():
     file_name=os.path.join(os.path.abspath(fulldatasetpath),
@@ -35,13 +24,17 @@ for index, row in metadata.iterrows():
 
 featuresdf = pd.DataFrame(features, columns='[feature', 'class_label'])
 print('Finished extracting from ', len(featuresdf), ' files')
+
+
+#Converting data does this
 X=np.array(featuresdf.feature.tolist())
 y=np.array(featuresdf.class_label.tolist())
 
 le = LabelEncoder()
 yy=to_categorical(le.fit_transform(y))
 
-x_train, x_test, y_train, y_test = train_test_split(X,yy,test_size=0.2, random_state=42)
+x_train, x_test, y_train, y_test =
+#train_test_split(X, yy, test_size=0.2, random_state=42)
 
 
 num_rows = 40
