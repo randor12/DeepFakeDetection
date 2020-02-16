@@ -5,10 +5,8 @@
 """
 
 from pandas import DataFrame
-import keras
-from keras.models import Sequential
+from sklearn.ensemble import *
 from sklearn import preprocessing
-from keras.layers import *
 from ExtractionScript import *
 import pickle
 
@@ -25,14 +23,10 @@ class Train():
         self.data = self.data.append(self.dataFrameFromDirectory(os.path.join(train_file, 'real'), 'REAL'))
         counts = self.data['audio'].values
         targets = preprocessing.LabelEncoder().fit_transform(self.data['label'].values)
-
-        print(targets.shape)
-
-        counts = counts.reshape((24, 1, 1))
-
-        print(counts.shape)
+        counts = counts.reshape(-1, 1)
 
         # Construct model
+        """
         classifier = Sequential()
         classifier.add(
             Conv1D(filters=16, kernel_size=2, input_shape=(1, 1), activation='relu', padding='same'))
@@ -58,10 +52,30 @@ class Train():
                            loss='binary_crossentropy',
                            metrics=['accuracy'])
         classifier.build(input_shape=(24, 1))
+        classifier.fit(counts, targets, epochs=10)
+        model_file = 'models/MyModel.h5'
+        classifier.save(model_file)
+        """
+        print(counts)
+        print(targets)
+        classifier = RandomForestClassifier()
         classifier.fit(counts, targets)
-        model_file = 'models/MyModel.pkl'
-        with open(model_file, 'wb') as file:
-            pickle.dump(classifier, file)
+
+        model_save = 'models/MyModel.sav'
+        pickle.dump(classifier, open(model_save, 'wb'))
+        """
+        val1 = np.max(extract_features('realtalk/real/JRE1169-0025.wav')).reshape((1, 1))
+        print(val1)
+        predict1 = classifier.predict(val1)
+        #predict2 = classifier.predict('realtalk/fake/JREa633-0023.wav')
+        word = 'REAL'
+        if predict1[0] == 1:
+            word = 'REAL'
+        else:
+            word = 'FAKE'
+        print("Predict 1: ", word)
+        #print("Predict 2: ", predict2)
+        """
 
 
 
@@ -76,7 +90,7 @@ class Train():
         index = []
 
         for filename, value in self.readFiles(path):
-            rows.append({'audio': np.mean(value), 'label': classification})
+            rows.append({'audio': np.max(value), 'label': classification})
             index.append(filename)
         return DataFrame(rows, index=index)
 
