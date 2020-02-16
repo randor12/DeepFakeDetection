@@ -8,7 +8,7 @@ This is our VT Hacks 7 Project for Deep Fake Detection
 - Justin Cheng
 
 ## Sources
-Kaggle Deep Fake Detection Data Set
+Dataset Downloaded From: https://github.com/dessa-public/fake-voice-detection
 
 ## Code
 This was programmed on Python 3

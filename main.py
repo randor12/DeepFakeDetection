@@ -4,10 +4,10 @@
 :description: Test out the prediction model
 """
 
-import Train
+# import Train
 
-model = Train.Train()
+# model = Train.Train()
 
 from PredictionModel import PredictionModel
 
-PredictionModel().predict('/c/Users/mattg/Music/XXX*')
+PredictionModel().predict('realtalk/fake/JREa570-0043.wav')

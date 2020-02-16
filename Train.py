@@ -26,36 +26,6 @@ class Train():
         counts = counts.reshape(-1, 1)
 
         # Construct model
-        """
-        classifier = Sequential()
-        classifier.add(
-            Conv1D(filters=16, kernel_size=2, input_shape=(1, 1), activation='relu', padding='same'))
-        classifier.add(MaxPooling1D(pool_size=2, padding='same'))
-        classifier.add(Dropout(0.2))
-
-        classifier.add(Conv1D(filters=32, kernel_size=2, activation='relu', padding='same'))
-        classifier.add(MaxPooling1D(pool_size=2, padding='same'))
-        classifier.add(Dropout(0.2))
-
-        classifier.add(Conv1D(filters=64, kernel_size=2, activation='relu', padding='same'))
-        classifier.add(MaxPooling1D(pool_size=2, padding='same'))
-        classifier.add(Dropout(0.2))
-
-        classifier.add(Conv1D(filters=128, kernel_size=2, activation='relu', padding='same'))
-        classifier.add(MaxPooling1D(pool_size=2, padding='same'))
-        classifier.add(Dropout(0.2))
-        classifier.add(GlobalAveragePooling1D())
-
-        classifier.add(Dense(1, activation='softmax'))
-
-        classifier.compile(optimizer='adam',
-                           loss='binary_crossentropy',
-                           metrics=['accuracy'])
-        classifier.build(input_shape=(24, 1))
-        classifier.fit(counts, targets, epochs=10)
-        model_file = 'models/MyModel.h5'
-        classifier.save(model_file)
-        """
         print(counts)
         print(targets)
         classifier = RandomForestClassifier()
