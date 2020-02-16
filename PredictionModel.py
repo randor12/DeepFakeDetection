@@ -5,7 +5,6 @@
     based on the trained model
 """
 
-import numpy as np
 from ExtractionScript import *
 import pickle
 

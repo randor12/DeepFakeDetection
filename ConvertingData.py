@@ -7,7 +7,6 @@
 from sklearn.preprocessing import LabelEncoder
 from keras.utils import to_categorical
 import numpy as np
-import pandas as pd
 from pandas import DataFrame
 
 
