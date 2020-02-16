@@ -6,28 +6,18 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
-from tkinter.ttk import *
-import Spectrogram as sp
 from PIL import Image
 from PredictionModel import PredictionModel
 
 temp = None
-
-def spectrogramUpdate(name, event=None):
-
-    return 0
-
+temp2 = None
 
 def UploadAction(event=None):
-    filename = filedialog.askopenfilename()
-    #spectrogramUpdate(filename)
-    print('File Name: ', filename)
-    temp = PredictionModel().predict(filename)
+    temp2 = filedialog.askopenfilename()
+    temp = PredictionModel().predict(temp2)
 
-    canvas1 = tk.Canvas(window, width=400, height=300, relief='raised')
-    canvas1.pack()
-    label3 = tk.Label(window, text='Prediction: ' + str(temp), font=('helvetica', 10))
-    canvas1.create_window(200, 210, window=label3)
+    label3.config(text='Prediction: ' + str(temp))
+    label2.config(text='File Path: \n' + str(temp2))
 
 # Creates window
 window = tk.Tk()
@@ -43,17 +33,15 @@ im2.save('img.png', im2.format)
 im2.close()
 pho2 = PhotoImage(file='img.png')
 
+canvas1 = tk.Canvas(window, width=400, height=300, relief='raised')
+label3=tk.Label(window, text='Prediction: No file selected', font=('helvetica', 24))
+canvas1.create_window(200, 140, window=label3)
+label2 = tk.Label(window, text='File Path: Cannot show path for no file\n', font=('helvetica', 24))
+canvas1.create_window(200, 190, window=label2)
+canvas1.pack()
+
 uploadButton = tk.Button(window, text='Input', command=UploadAction, image=pho2)
 uploadButton.config(height=300, width=300)
-uploadButton.grid(row=0, column=1)
 uploadButton.pack()
 
-#holder = Text(window, height=20, width=25, font=('Times New Roman', 28), bg="black", fg="white")
-#scrollbar = Scrollbar(window, command=holder.yview)
-#holder['yscrollcommand'] = scrollbar.set
-#holder.grid()
-#holder.pack()
-
 window.mainloop()
-
-    # Creates items in window4
