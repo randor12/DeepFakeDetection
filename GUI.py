@@ -26,8 +26,6 @@ window.title("DeepVoice")
 w, h = window.winfo_screenwidth()*0.9, window.winfo_screenheight()*0.9 #resizes to not completely fill window
 window.geometry("%dx%d+%d+%d" % (w, h, w*.05, h*.05)) #place more in middle of screen
 
-#photo = PhotoImage(file='music_notes-512.png')
-
 #resize image to better fit box
 photo = Image.open('music_notes-512.png')
 size = (300,300)
