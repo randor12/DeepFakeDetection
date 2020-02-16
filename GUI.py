@@ -19,7 +19,7 @@ def spectrogramUpdate(name,event=None):
 
 def UploadAction(event=None):
     filename = filedialog.askopenfilename()
-    spectrogramUpdate(filename)
+    #spectrogramUpdate(filename)
     main.fi(filename)
 
 # Creates window
