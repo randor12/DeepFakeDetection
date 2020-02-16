@@ -14,7 +14,6 @@ temp2 = None
 
 def UploadAction(event=None):
     temp2 = filedialog.askopenfilename()
-    print(len(temp2))
     if len(temp2) > 0:
         temp = PredictionModel().predict(temp2)
 
