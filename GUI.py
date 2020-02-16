@@ -14,10 +14,12 @@ temp2 = None
 
 def UploadAction(event=None):
     temp2 = filedialog.askopenfilename()
-    temp = PredictionModel().predict(temp2)
+    print(len(temp2))
+    if len(temp2) > 0:
+        temp = PredictionModel().predict(temp2)
 
-    label3.config(text='Prediction: ' + str(temp))
-    label2.config(text='File Path: \n' + str(temp2))
+        label3.config(text='Prediction: ' + str(temp))
+        label2.config(text='File Path: \n' + str(temp2))
 
 # Creates window
 window = tk.Tk()
