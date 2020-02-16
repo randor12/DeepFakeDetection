@@ -7,13 +7,16 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
 from tkinter.ttk import *
+import Spectrogram as sp
+
 
 def spectrogramUpdate(event=None):
+    return 0
 
 
 def UploadAction(event=None):
     filename = filedialog.askopenfilename()
-    return filename
+    spectrogramUpdate(filename)
 
 
 # Creates window
@@ -29,6 +32,11 @@ uploadButton.config(height=300, width=300)
 uploadButton.grid(row=0, column=1)
 uploadButton.pack()
 
+holder = Text(window, height=20, width=25, font=('Times New Roman', 28), bg="black", fg="white")
+scrollbar = Scrollbar(window, command=holder.yview)
+holder['yscrollcommand'] = scrollbar.set
+holder.grid()
+holder.pack()
 
 window.mainloop()
 
