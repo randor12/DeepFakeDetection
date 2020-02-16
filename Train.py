@@ -25,12 +25,9 @@ class Train():
         self.data = self.data.append(self.dataFrameFromDirectory(os.path.join(train_file, 'real'), 'REAL'))
         counts = self.data['audio'].values
         targets = preprocessing.LabelEncoder().fit_transform(self.data['label'].values)
-
-        print(targets.shape)
-
         counts = counts.reshape((24, 1, 1))
 
-        print(counts.shape)
+        print(counts)
 
         # Construct model
         classifier = Sequential()
@@ -58,10 +55,9 @@ class Train():
                            loss='binary_crossentropy',
                            metrics=['accuracy'])
         classifier.build(input_shape=(24, 1))
-        classifier.fit(counts, targets)
-        model_file = 'models/MyModel.pkl'
-        with open(model_file, 'wb') as file:
-            pickle.dump(classifier, file)
+        classifier.fit(counts, targets, epochs=10)
+        model_file = 'models/MyModel.h5'
+        classifier.save(model_file)
 
 
 
@@ -76,7 +72,7 @@ class Train():
         index = []
 
         for filename, value in self.readFiles(path):
-            rows.append({'audio': np.mean(value), 'label': classification})
+            rows.append({'audio': np.product(value), 'label': classification})
             index.append(filename)
         return DataFrame(rows, index=index)
 

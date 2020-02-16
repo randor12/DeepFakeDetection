@@ -5,8 +5,8 @@
     based on the trained model
 """
 
-from sklearn.linear_model import LinearRegression
-import pickle
+import keras
+import numpy as np
 from ExtractionScript import *
 
 
@@ -15,7 +15,7 @@ class PredictionModel:
         """
         Initialize the prediction model
         """
-        self.model_path = 'models/MyModel.pkl'
+        self.model_path = 'models/MyModel.h5'
 
     def predict(self, frame):
         """
@@ -23,15 +23,19 @@ class PredictionModel:
         :param frame: image/video sent in to be analyzed
         :return: Return if the frame has been edited visually or through audio
         """
-        try:
-            with open(self.model_path, 'rb') as file:
-                model = pickle.load(file)
+        model = keras.models.load_model(self.model_path)
 
-            process = extract_features(frame)
+        process = np.mean(extract_features(frame)).reshape(1, 1, 1)
 
-            predicted = model.predict(process)
+        predicted = model.predict(process)
 
-            return predicted
-        except Exception:
-            print("Model not found")
-            return None
+        print(predicted)
+
+        labels = ['fake', 'real']
+
+        i = predicted.argmax(axis=0)[0]
+
+        print(labels[i])
+
+        return labels[i]
+
