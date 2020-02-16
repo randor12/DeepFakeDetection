@@ -9,5 +9,5 @@
 # model = Train.Train()
 
 from PredictionModel import PredictionModel
-
-PredictionModel().predict('realtalk/fake/JREa570-0043.wav')
+def fi(name):
+    PredictionModel().predict(name)

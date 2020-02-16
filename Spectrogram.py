@@ -41,6 +41,7 @@ class Spectrogram:
             MagFreq[1:len(MagFreq) -1] = MagFreq[1:len(MagFreq) - 1] * 2
 
         plt.figure()
+        plt.show()
         freqAxis = np.arrange(0,int(np.ceil((n+1)/2.0), 1.0) * (fs / n))
         plt.plot(freqAxis/1000.0, 10*np.log10(MagFreq))
         plt.xlabel('Frequency (kHz)')

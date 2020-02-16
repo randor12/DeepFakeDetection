@@ -9,16 +9,18 @@ from tkinter import *
 from tkinter.ttk import *
 import Spectrogram as sp
 from PIL import Image
+import main
 
 
-def spectrogramUpdate(event=None):
-    return 0
+def spectrogramUpdate(name,event=None):
+
+    return sp.main(name)
 
 
 def UploadAction(event=None):
     filename = filedialog.askopenfilename()
     spectrogramUpdate(filename)
-
+    main.fi(filename)
 
 # Creates window
 window = tk.Tk()
@@ -37,12 +39,12 @@ uploadButton = tk.Button(window, text='Input', command=UploadAction, image=pho2)
 uploadButton.config(height=300, width=300)
 uploadButton.grid(row=0, column=1)
 uploadButton.pack()
-
+#name = filedialog.askopenfilename()
+#vid.show()
 holder = Text(window, height=20, width=25, font=('Times New Roman', 28), bg="black", fg="white")
 scrollbar = Scrollbar(window, command=holder.yview)
 holder['yscrollcommand'] = scrollbar.set
 #holder.grid()
-holder.
 holder.pack()
 
 window.mainloop()
