@@ -1,5 +1,5 @@
 """
-:author: Ryan Nicholas, Justin Cheng, Marcus Tran
+:author: Matt Gonley, Ryan Nicholas, Justin Cheng, Marcus Tran
 :date: February 14, 2020
 :description: This is our GUI code
 """
