@@ -10,4 +10,4 @@ model = Train.Train()
 
 from PredictionModel import PredictionModel
 
-PredictionModel().predict('realtalk/real/JRE1169-0025.wav')
+PredictionModel().predict('/c/Users/mattg/Music/XXX*')
