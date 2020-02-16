@@ -5,9 +5,9 @@
     based on the trained model
 """
 
-import keras
 import numpy as np
 from ExtractionScript import *
+import pickle
 
 
 class PredictionModel:
@@ -15,7 +15,7 @@ class PredictionModel:
         """
         Initialize the prediction model
         """
-        self.model_path = 'models/MyModel.h5'
+        self.model_path = 'models/MyModel.sav'
 
     def predict(self, frame):
         """
@@ -23,19 +23,15 @@ class PredictionModel:
         :param frame: image/video sent in to be analyzed
         :return: Return if the frame has been edited visually or through audio
         """
-        model = keras.models.load_model(self.model_path)
+        model = pickle.load(open(self.model_path, 'rb'))
 
-        process = np.mean(extract_features(frame)).reshape(1, 1, 1)
+        process = np.max(extract_features(frame)).reshape((1, 1))
 
         predicted = model.predict(process)
 
-        print(predicted)
+        labels = ['FAKE', 'REAL']
 
-        labels = ['fake', 'real']
+        print("Prediction: ", labels[predicted[0]])
 
-        i = predicted.argmax(axis=0)[0]
-
-        print(labels[i])
-
-        return labels[i]
+        return labels[predicted[0]]
 
