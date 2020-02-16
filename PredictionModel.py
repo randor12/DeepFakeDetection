@@ -32,6 +32,5 @@ class PredictionModel:
         labels = ['FAKE', 'REAL']
 
         print("Prediction: ", labels[predicted[0]])
-
         return labels[predicted[0]]
 

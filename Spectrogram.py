@@ -13,8 +13,11 @@ import numpy as np
 
 class Spectrogram:
 
-    def main(self, AudioFile):
-        AudioName = AudioFile
+    def __init__(self,name):
+        self=name
+
+    def main(self, name):
+        AudioName = name
         try:
             (AudioName.endswith('.wav'))
             fs, Audiodata = wavfile.read(AudioName)
