@@ -1,5 +1,5 @@
 # DeepFakeDetection
-This is our VT Hacks 7 Project for Deep Fake Detection
+This is our VT Hacks 7 Project for Deep Fake Detection. It specifically focuses on Deep Fake Audio.
 
 ## Authors
 - Ryan Nicholas
