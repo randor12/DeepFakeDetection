@@ -27,9 +27,11 @@ class PredictionModel:
         process = np.max(extract_features(frame)).reshape((1, 1))
 
         predicted = model.predict(process)
+        predict_data = model.predict_proba(process)
 
         labels = ['FAKE', 'REAL']
 
         print("Prediction: ", labels[predicted[0]])
+        print("Confidence: ", predict_data)
         return labels[predicted[0]]
 
